@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Martin Moxon: Lecture Hall Model</title>
+  </head>
+
+  <body onload="main()">
+    <canvas id="webgl" width="1300" height="600">
+    Please use a browser that supports "canvas"
+    </canvas>
+    <table>
+      <td>
+        <ul>
+          <li> W/A/S/D: Move forward/left/down/right </li>
+          <li> Left/Right Arrow Keys: Move Left/right </li>
+          <li> SpaceBar: Jump </li>
+          <li> Shift: Increase Movement Speed </li>
+          <li> Control: Decrease Movement Speed </li>
+          <li> 1/2/3/4: Light Controls </li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li id =  "eyepos"></li>
+          <li id = "lookpos"></li>
+          <li> R/T Reverse Progress Slide </li>
+          <li> J :Ceiling Fan Switch </li>
+          <li> H: Activate Door Hinge </li>
+          <li> C/V Decrease/Increase Chairs in X Direction </li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li> Note: Some keys work only during daytime </li>
+          <li> Hold down mouseclick and move mouse to move camera </li>
+          <li> B/N Decrease/Increase Chairs in Z Direction </li>
+        </ul>
+      </td>
+    </table>
+
+    <script src="lib/webgl-utils.js"></script>
+    <script src="lib/webgl-debug.js"></script>
+    <script src="lib/cuon-utils.js"></script>
+    <script src="lib/cuon-matrix.js"></script>
+    <script src="lecturehall2.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,65 @@
+#ifdef GL_ES
+precision mediump float;
+#endif
+uniform vec3 u_LightColor1;
+uniform vec3 u_LightColor2;
+uniform vec3 u_LightColor3;
+uniform vec3 u_LightColor4;
+uniform vec3 u_AmbientLight;
+uniform vec3 u_LightPosition1;
+uniform vec3 u_LightPosition2;
+uniform vec3 u_LightPosition3;
+uniform vec3 u_LightPosition4;
+varying vec3 v_Normal;
+varying vec3 v_Position;
+varying vec4 v_Color;
+
+uniform bool u_LightOn1;
+uniform bool u_LightOn2;
+uniform bool u_LightOn3;
+uniform bool u_LightOn4;
+uniform bool u_isTexture;
+
+uniform sampler2D u_Sampler;
+uniform vec3 u_LightPosition;
+varying vec2 v_TexCoord;
+
+void main() 
+{
+  vec3 lightDirection1 = u_LightPosition1-v_Position;
+  vec3 lightDirection2 = u_LightPosition2-v_Position;
+  vec3 lightDirection3 = u_LightPosition3-v_Position;
+  vec3 lightDirection4 = u_LightPosition4-v_Position;
+
+  float dist1 = length(lightDirection1);
+  float dist2 = length(lightDirection2);
+  float dist3 = length(lightDirection3);
+  float dist4 = length(lightDirection4);
+
+  float r2nDotL1 = (2000.0/(dist1*dist1*dist1))*float(u_LightOn1)*max(dot(lightDirection1, v_Normal), 0.0);
+  float r2nDotL2 = (2000.0/(dist2*dist2*dist2))*float(u_LightOn2)*max(dot(lightDirection2, v_Normal), 0.0);
+  float r2nDotL3 = (2000.0/(dist3*dist3*dist3))*float(u_LightOn3)*max(dot(lightDirection3, v_Normal), 0.0);
+  float r2nDotL4 = (2000.0/(dist4*dist4*dist4))*float(u_LightOn4)*max(dot(lightDirection4, v_Normal), 0.0);
+
+  float nDotL = min(r2nDotL1+r2nDotL2+r2nDotL3+r2nDotL4,1.0);
+
+  vec4 color;
+  
+  if (u_isTexture)
+  {
+  color = texture2D(u_Sampler, v_TexCoord);
+  }
+  else
+  {
+  color = v_Color;
+  }
+  vec3 diffuse1 = u_LightColor1*r2nDotL1;
+  vec3 diffuse2 = u_LightColor2*r2nDotL2;
+  vec3 diffuse3 = u_LightColor3*r2nDotL3;
+  vec3 diffuse4 = u_LightColor4*r2nDotL4;
+  vec3 diffuse = diffuse1+diffuse2+diffuse3+diffuse4;
+  vec3 totalLight = u_AmbientLight+diffuse;
+
+  gl_FragColor = vec4(totalLight*color.rgb, color.a);
+  
+}
